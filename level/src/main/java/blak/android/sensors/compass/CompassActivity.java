@@ -1,23 +1,14 @@
 package blak.android.sensors.compass;
 
+import blak.android.sensors.OrientationListener;
+import blak.android.sensors.OrientationManager;
 import blak.android.sensors.level.R;
-import blak.android.utils.ContextUtils;
 
 import android.app.Activity;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 
 public class CompassActivity extends Activity {
-
-    private static final int DELAY = SensorManager.SENSOR_DELAY_UI;
-
-    private final float[] mRotationMatrixR = new float[16];
-    private final float[] mAccelerometerData = new float[3];
-    private final float[] mMagneticFieldData = new float[3];
-    private final float[] mOrientationData = new float[3];
+    private final OrientationManager mOrientationManager = new OrientationManager();
 
     private CompassView mCompassView;
 
@@ -33,55 +24,25 @@ public class CompassActivity extends Activity {
     protected void onStart() {
         super.onStart();
 
-        SensorManager sensorManager = ContextUtils.getSensorManager(this);
-
-        Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(mAccelerometerListener, accelerometerSensor, DELAY);
-
-        Sensor magneticSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-        sensorManager.registerListener(mMagneticListener, magneticSensor, DELAY);
+        mOrientationManager.onStart(this, mOrientationListener);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-        SensorManager sensorManager = ContextUtils.getSensorManager(this);
-        sensorManager.unregisterListener(mAccelerometerListener);
-        sensorManager.unregisterListener(mMagneticListener);
+        mOrientationManager.onStop(this);
     }
 
-    public void onSensorsEvent() {
-        SensorManager.getRotationMatrix(mRotationMatrixR, null, mAccelerometerData, mMagneticFieldData);
-        SensorManager.getOrientation(mRotationMatrixR, mOrientationData);
-
-        double degrees = Math.toDegrees(mOrientationData[0]);
+    public void onSensorsEvent(float[] orientation) {
+        double degrees = Math.toDegrees(orientation[0]);
         mCompassView.updateDirection(degrees);
     }
 
-    private final SensorEventListener mAccelerometerListener = new SensorEventListener() {
+    private final OrientationListener mOrientationListener = new OrientationListener() {
         @Override
-        public void onSensorChanged(SensorEvent event) {
-            System.arraycopy(event.values, 0, mAccelerometerData, 0, mAccelerometerData.length);
-            onSensorsEvent();
-        }
-
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        public void onOrientationEvent(float[] orientation) {
+            onSensorsEvent(orientation);
         }
     };
-
-    private final SensorEventListener mMagneticListener = new SensorEventListener() {
-        @Override
-        public void onSensorChanged(SensorEvent event) {
-            System.arraycopy(event.values, 0, mMagneticFieldData, 0, mMagneticFieldData.length);
-            onSensorsEvent();
-        }
-
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        }
-    };
-
-
 }
