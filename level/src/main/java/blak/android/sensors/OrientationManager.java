@@ -50,9 +50,10 @@ public class OrientationManager {
         }
         SensorManager.getOrientation(mRotationMatrixR, mOrientationData);
 
-        float[] values = new float[DATA_SIZE];
-        System.arraycopy(mOrientationData, 0, values, 0, values.length);
-        mListener.onOrientationEvent(values);
+        float azimuth = mOrientationData[0];
+        float pitch = mOrientationData[1];
+        float roll = mOrientationData[2];
+        mListener.onOrientationEvent(azimuth, pitch, roll);
     }
 
     private final SensorEventListener mAccelerometerListener = new SensorEventListener() {

@@ -34,20 +34,24 @@ public class MainActivity extends Activity {
         mOrientationManager.onStop(this);
     }
 
-    private String formatOrientation(float [] orientation) {
-        String format = "around Z:%d\n" + "around X:%d\n" + "around Y:%d\n";
-        int azimuth = (int) Math.toDegrees(orientation[0]);
-        int pitch = (int) Math.toDegrees(orientation[1]);
-        int roll = (int) Math.toDegrees(orientation[2]);
+    private void updatetextView(float azimuth, float pitch, float roll) {
+        String message = formatOrientation(azimuth, pitch, roll);
+        mTextView.setText(message);
+    }
 
+    private String formatOrientation(float azimuth, float pitch, float roll) {
+        String format = "around Z:%d\n" + "around X:%d\n" + "around Y:%d\n";
+        int azimuthDegrees = (int) Math.toDegrees(azimuth);
+        int pitchDegrees = (int) Math.toDegrees(pitch);
+        int rollDegrees = (int) Math.toDegrees(roll);
         return String.format(format, azimuth, pitch, roll);
     }
 
     private final OrientationListener mOrientationListener = new OrientationListener() {
         @Override
-        public void onOrientationEvent(float[] orientation) {
-            String message = formatOrientation(orientation);
-            mTextView.setText(message);
+        public void onOrientationEvent(float azimuth, float pitch, float roll) {
+            updatetextView(azimuth, pitch, roll);
         }
     };
+
 }

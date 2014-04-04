@@ -34,15 +34,15 @@ public class CompassActivity extends Activity {
         mOrientationManager.onStop(this);
     }
 
-    public void onSensorsEvent(float[] orientation) {
-        double degrees = Math.toDegrees(orientation[0]);
+    public void onSensorsEvent(float azimuth, float pitch, float roll) {
+        double degrees = Math.toDegrees(azimuth);
         mCompassView.updateDirection(degrees);
     }
 
     private final OrientationListener mOrientationListener = new OrientationListener() {
         @Override
-        public void onOrientationEvent(float[] orientation) {
-            onSensorsEvent(orientation);
+        public void onOrientationEvent(float azimuth, float pitch, float roll) {
+            onSensorsEvent(azimuth, pitch, roll);
         }
     };
 }
