@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-    <TextView
-            android:id="@+id/ls__main_text"
+    <blak.android.sensors.level.VerticalProgressBar
+            android:id="@+id/ls__main_vertical_level"
+            android:layout_height="match_parent"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:textAppearance="@android:style/TextAppearance.Medium"
-            tools:text="around Z: 12 \naround X: 15 \naround Y: 45"/>
+            android:minWidth="20dp"
+            android:maxWidth="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_above="@+id/ls__main_horizontal_level"
+            android:layout_margin="10dp"/>
 
-    <ImageView
-            android:layout_width="wrap_content"
+    <ProgressBar
+            android:id="@+id/ls__main_horizontal_level"
             android:layout_height="wrap_content"
-            android:src="@drawable/ls__earth_xyz_axis"/>
+            android:layout_width="match_parent"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@id/ls__main_vertical_level"
+            android:layout_margin="10dp"
+            tools:progress="73"/>
 
-</LinearLayout>
+</RelativeLayout>
