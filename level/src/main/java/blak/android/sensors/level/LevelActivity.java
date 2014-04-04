@@ -7,7 +7,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 
-public class MainActivity extends Activity {
+public class LevelActivity extends Activity {
     private static final int MAX_LEVEL = 100;
     private static final int ZERO_LEVEL = MAX_LEVEL / 2;
     private static final double TWO_PI = Math.PI * 2;

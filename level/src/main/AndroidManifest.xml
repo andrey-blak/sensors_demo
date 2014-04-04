@@ -10,7 +10,8 @@
                  android:theme="@style/AppTheme">
 
         <activity
-                android:name=".MainActivity"
+                android:name=".LevelActivity"
+                android:label="Level"
                 android:screenOrientation="portrait"
                 >
             <intent-filter>
