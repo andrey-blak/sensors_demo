@@ -1,6 +1,7 @@
-package blak.android.sensors;
+package blak.android.sensors.movement;
 
 import blak.android.sensors.level.R;
+import blak.android.sensors.level.VerticalProgressBar;
 import blak.android.utils.ContextUtils;
 
 import android.app.Activity;
@@ -15,18 +16,21 @@ public class MovementActivity extends Activity {
     private static final int DELAY = SensorManager.SENSOR_DELAY_UI;
     private static final int HIGH_PASS_MINIMUM = 10;
     private static final float ALPHA = 0.8f;
-    private static final String FORMAT = "X: %.3f\nY: %.3f\nZ: %.3f\nTotal: %.3f";
 
     private int mHighPassCount;
 
-    private TextView mTextView;
+    private MovementView mCompass;
+    private VerticalProgressBar mLevelBar;
+    private TextView mAccelerationTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ls__text_activity);
+        setContentView(R.layout.ls__movement_activity);
 
-        mTextView = (TextView) findViewById(R.id.ls__text);
+        mCompass = (MovementView) findViewById(R.id.ls__movement_compass);
+        mLevelBar = (VerticalProgressBar) findViewById(R.id.ls__movement_level);
+        mAccelerationTextView = (TextView) findViewById(R.id.ls__movement_acceleration);
     }
 
     @Override
@@ -56,8 +60,13 @@ public class MovementActivity extends Activity {
         double sumOfSquares = accX * accX + (accY * accY) + (accZ * accZ);
         double acceleration = Math.sqrt(sumOfSquares);
 
-        String message = String.format(FORMAT, accX, accY, accZ, acceleration);
-        mTextView.setText(message);
+        int verticalMax = mLevelBar.getMax();
+        int verticalLevel = (int) (-accZ / 20 * verticalMax + verticalMax / 2);
+        mLevelBar.setProgress(verticalLevel);
+
+        mCompass.updateDirection(accX, accY);
+
+        mAccelerationTextView.setText(String.format("%.2f", acceleration));
     }
 
     private final SensorEventListener mListener = new SensorEventListener() {

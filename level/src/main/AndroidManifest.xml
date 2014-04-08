@@ -30,8 +30,9 @@
         </activity>
 
         <activity
-                android:name="blak.android.sensors.MovementActivity"
-                android:label="MovementActivity"
+                android:name="blak.android.sensors.movement.MovementActivity"
+                android:label="Movement"
+                android:screenOrientation="portrait"
                 >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

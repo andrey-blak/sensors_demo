@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <TextView
+            android:id="@+id/ls__movement_acceleration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            tools:text="Accel: 4.56"/>
+
+    <blak.android.sensors.movement.MovementView
+            android:id="@+id/ls__movement_compass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/ls__movement_level"
+            android:layout_below="@id/ls__movement_acceleration"/>
+
+    <blak.android.sensors.level.VerticalProgressBar
+            android:id="@+id/ls__movement_level"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:minWidth="20dp"
+            android:maxWidth="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"/>
+
+</RelativeLayout>
