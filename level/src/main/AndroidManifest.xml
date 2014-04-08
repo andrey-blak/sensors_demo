@@ -22,7 +22,7 @@
 
         <activity
                 android:name="blak.android.sensors.compass.CompassActivity"
-                android:label="CompassActivity"
+                android:label="Compass"
                 >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
