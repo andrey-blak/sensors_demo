@@ -45,7 +45,6 @@ public class CompassView extends View {
 
         float radiusCompass = (float) (Math.min(width, height) * 0.9);
         canvas.drawCircle(width, height, radiusCompass, mPaint);
-        canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint);
 
         double radians = Math.toRadians(-mDirection);
         float stopX = (float) (width + radiusCompass * Math.sin(radians));
@@ -57,6 +56,9 @@ public class CompassView extends View {
 
     }
 
+    /**
+     *@param dir direction in degrees
+     */
     public void updateDirection(double dir) {
         mDirection = dir;
         invalidate();
